@@ -101,9 +101,13 @@ public class ProductController {
         model.addAttribute("product", productService.findById(id));
         return "view-product";
     }
-    @GetMapping("/garbage")
+    @GetMapping("/garbageProduct")
     public String showDelete(Model model, Pageable pageable){
         model.addAttribute("list",productReponsitory.findAllByDeletedIsTrue(pageable));
         return "product-list";
+    }
+    @GetMapping("/garbage")
+    public String showGarbage(){
+        return "garbage-view";
     }
 }

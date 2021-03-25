@@ -105,5 +105,9 @@ public class CategoryController {
         }
         return "redirect:/category";
     }
-
+      @GetMapping("/garbageCategory")
+    public String showdelete(Model model, Pageable pageable){
+        model.addAttribute("list" , categoryReponsitory.findAllByDeletedIsTrue(pageable));
+        return "category-list";
+      }
 }
