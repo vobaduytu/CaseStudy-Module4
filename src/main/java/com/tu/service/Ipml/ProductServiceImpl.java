@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,8 +19,13 @@ public class ProductServiceImpl implements ProductService {
     private ProductReponsitory productReponsitory;
 
     @Override
+    public List<Product> findByName(String name) {
+        return productReponsitory.findByName(name);
+    }
+
+    @Override
     public Page<Product> showAll(Pageable pageable) {
-        return productReponsitory.findAll(pageable);
+        return productReponsitory.findAllByDeletedIsFalse(pageable);
     }
 
     @Override
@@ -36,4 +42,6 @@ public class ProductServiceImpl implements ProductService {
     public void delete(Long id) {
     productReponsitory.deleteById(id);
     }
+
+
 }

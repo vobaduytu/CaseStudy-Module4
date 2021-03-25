@@ -2,19 +2,22 @@ package com.tu.service.Ipml;
 
 import com.tu.model.Category;
 import com.tu.repository.CategoryRepository;
+import com.tu.repository.ProductReponsitory;
 import com.tu.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService
 {
-
+    @Autowired
+    private ProductReponsitory productReponsitory;
     @Autowired
     private CategoryRepository categoryRepository;
 
@@ -25,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService
 
     @Override
     public Page<Category> showAll(Pageable pageable) {
-        return categoryRepository.findAll(pageable);
+        return categoryRepository.findAllByDeletedIsFalse(pageable);
     }
 
     @Override
@@ -39,8 +42,12 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
-    categoryRepository.deleteById(id);
+        boolean result = categoryRepository.softDeleteCategory(id) > 0;
+        if (!result)
+            throw new RuntimeException("category not found");
+        productReponsitory.softDeletePostByCategoryId(id);
     }
 
 }

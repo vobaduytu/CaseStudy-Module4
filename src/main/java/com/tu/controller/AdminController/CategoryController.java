@@ -48,7 +48,7 @@ public class CategoryController {
     }
 
     @PostMapping("/doAdd")
-    public String doAdd(@ModelAttribute("category") @Validated Category category, RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+    public String doAdd(@Valid @ModelAttribute("category") Category category, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         try{
             if (bindingResult.hasErrors()){
                 return "add-category";
@@ -58,7 +58,6 @@ public class CategoryController {
             if (categoryTemps == null || categoryTemps.isEmpty()) {
                 categoryService.save(category);
                 redirectAttributes.addFlashAttribute("mess", "Thêm mới thành công...!!!");
-
             }else {
                 redirectAttributes.addFlashAttribute("mess", "Tên Category đã tồn tại");
             }
@@ -86,8 +85,11 @@ public class CategoryController {
 
 
     @PostMapping("/doEdit")
-    public String doEdit(@ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
+    public String doEdit(@Valid @ModelAttribute("category") Category category,BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         try {
+            if (bindingResult.hasErrors()){
+                return "edit-category";
+            }
             String name = category.getName();
             List<Category> categoryTemps = categoryReponsitory.findByName(name);
             if (categoryTemps == null || categoryTemps.isEmpty()) {

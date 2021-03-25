@@ -33,14 +33,14 @@
                         <form th:object="${category}" method="post" th:action="@{/doAdd}">
                             <div class="form-group">
                                 <label for="usr">Name:</label>
-                                <input type="text" class="form-control" id="usr" th:field="*{name}" REQUIRED>
-                                <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name Error</td>
+                                <input type="text" class="form-control" id="usr" th:field="*{name}">
+                                <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}" >name Error</td>
                             </div>
                             <div class="form-group">
                                 <label for="comment">Description:</label>
                                 <textarea class="form-control" rows="5" id="comment"
-                                          th:field="*{description}" REQUIRED></textarea>
-                                <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">name Error</td>
+                                          th:field="*{description}" ></textarea>
+                                <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}" >name Error</td>
                             </div>
                             <button type="submit" class="btn btn-fill btn-primary">Save</button>
                         </form>

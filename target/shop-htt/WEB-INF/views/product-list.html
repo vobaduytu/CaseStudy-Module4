@@ -47,8 +47,8 @@
                             <h4 class="card-title">Product</h4>
                         </div>
                         <div class="card-footer">
-                            <span class=" btn btn-fill btn-primary"><a th:href="@{/addCategory}"
-                                                                       style="color: white !important;">Add Category</a></span>
+                            <span class=" btn btn-fill btn-primary"><a th:href="@{/addProduct}"
+                                                                       style="color: white !important;">Add Product</a></span>
                         </div>
                         <p hidden id="mess" th:utext="${mess}"></p>
                         <div class="card-body">
@@ -61,6 +61,7 @@
                                         <th>Color</th>
                                         <th>Price</th>
                                         <th>CreateDay</th>
+                                        <th>Category</th>
                                         <th>Status</th>
                                         <th colspan="2">Action</th>
                                     </tr>
@@ -72,12 +73,13 @@
                                         <td th:text="${product.color}"></td>
                                         <td th:text="${product.price}"></td>
                                         <td th:text="${product.createDate}"></td>
-                                        <td th:text="${product.status ? 'Còn hàng' :'Hết hàng'}"></td>
+                                        <td th:text="${product.category.name}"></td>
+                                        <td th:text="${product.status ? 'Hết hàng' :'Còn hàng'}"></td>
                                         <td><a th:href="@{/{id}/views(id=${product.id})}"><i
                                                 class="fas fa-eye"></i></a></td>
-                                        <td><a th:href="@{/{id}/edit(id=${product.id})}"><i
+                                        <td><a th:href="@{/{id}/edits(id=${product.id})}"><i
                                                 class="tim-icons icon-pencil"></i></a></td>
-                                        <td><a th:href="@{/{id}/delete(id=${product.id})}"
+                                        <td><a th:href="@{/{id}/deletes(id=${product.id})}"
                                                onclick="return confirm('co chac muon xoa')"><i
                                                 class="fas fa-trash-alt"></i></a>
                                         </td>
